@@ -5,54 +5,51 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
+    const [movieData, setMovieData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<any>(null);
+
+
+  useEffect(()=>{
+       const getData = async () => {
+         try {
+           const data = await fetchMovieData();
+           setMovieData(data);
+         } catch (err) {
+           setError(err);
+         } finally {
+           setLoading(false);
+         }
+       };
+
+       getData();
+  },[]);
+
+  console.log("-----------------");
+  console.log(movieData);
+
+  const fetchMovieData = async () => {
+    try {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/movie/157336?api_key=3f46ff37c76cce5c6e7e2de6e9e77386"
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching movie data:", error);
+      throw error;
+    }
+  };
   return (
     <>
     <SafeAreaView>
       <Text>Hello World</Text>
     </SafeAreaView>
     </>
-    // <ParallaxScrollView
-    //   headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-    //   headerImage={
-    //     <Image
-    //       source={require('@/assets/images/partial-react-logo.png')}
-    //       style={styles.reactLogo}
-    //     />
-    //   }>
-    //   <ThemedView style={styles.titleContainer}>
-    //     <ThemedText type="title">Welcome!</ThemedText>
-    //     <HelloWave />
-    //   </ThemedView>
-    //   <ThemedView style={styles.stepContainer}>
-    //     <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-    //     <ThemedText>
-    //       Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-    //       Press{' '}
-    //       <ThemedText type="defaultSemiBold">
-    //         {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-    //       </ThemedText>{' '}
-    //       to open developer tools.
-    //     </ThemedText>
-    //   </ThemedView>
-    //   <ThemedView style={styles.stepContainer}>
-    //     <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-    //     <ThemedText>
-    //       Tap the Explore tab to learn more about what's included in this starter app.
-    //     </ThemedText>
-    //   </ThemedView>
-    //   <ThemedView style={styles.stepContainer}>
-    //     <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-    //     <ThemedText>
-    //       When you're ready, run{' '}
-    //       <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-    //       <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-    //       <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-    //       <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-    //     </ThemedText>
-    //   </ThemedView>
-    // </ParallaxScrollView>
+    
   );
 }
 
