@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
-    const [movieData, setMovieData] = useState(null);
+    const [movieData, setMovieData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<any>(null);
 
@@ -29,7 +29,7 @@ export default function HomeScreen() {
   },[]);
 
   console.log("-----------------");
-  console.log(movieData);
+  console.log("data=",movieData);
 
   const fetchMovieData = async () => {
     try {
