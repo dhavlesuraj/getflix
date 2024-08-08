@@ -28,9 +28,21 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
-          title: "Explore",
+          title: "Search",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+               name={focused ? "search" : "search-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="coming-Soon"
+        options={{
+          title: "Coming-Soon",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "code-slash" : "code-slash-outline"}
@@ -40,12 +52,26 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="download"
         options={{
-          title: "Profile",
+          title: "Download",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "person" : "person-outline"}
+              name={focused ? "download" : "download-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="more"
+        options={{
+          title: "More",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={
+                focused ? "ellipsis-horizontal" : "ellipsis-horizontal-outline"
+              }
               color={color}
             />
           ),
