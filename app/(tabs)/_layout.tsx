@@ -40,12 +40,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="coming-Soon"
+        name="coming-soon"
         options={{
           title: "Coming-Soon",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "time" : "time-outline"}
               color={color}
             />
           ),

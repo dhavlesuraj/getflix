@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform,Text } from 'react-native';
+import { Image, StyleSheet, Platform, Text } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -8,28 +8,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
-    const [movieData, setMovieData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<any>(null);
+  const [movieData, setMovieData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
 
 
-  useEffect(()=>{
-       const getData = async () => {
-         try {
-           const data = await fetchMovieData();
-           setMovieData(data);
-         } catch (err) {
-           setError(err);
-         } finally {
-           setLoading(false);
-         }
-       };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchMovieData();
+        setMovieData(data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-       getData();
-  },[]);
+    getData();
+  }, []);
 
-  console.log("-----------------");
-  console.log("data=",movieData);
+  // console.log("-----------------");
+  // console.log("data=",movieData);
 
   const fetchMovieData = async () => {
     try {
@@ -45,11 +45,10 @@ export default function HomeScreen() {
   };
   return (
     <>
-    <SafeAreaView>
-      <Text>Hello World</Text>
-    </SafeAreaView>
+      <SafeAreaView>
+        <Text>Hello World</Text>
+      </SafeAreaView>
     </>
-    
   );
 }
 
