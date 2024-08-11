@@ -1,18 +1,42 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Keyboard } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  
+    useEffect(() => {
+      const keyboardDidShowListener = Keyboard.addListener(
+        "keyboardDidShow",
+        () => {
+          setKeyboardVisible(true);
+        }
+      );
+
+      const keyboardDidHideListener = Keyboard.addListener(
+        "keyboardDidHide",
+        () => {
+          setKeyboardVisible(false);
+        }
+      );
+
+      return () => {
+        keyboardDidShowListener.remove();
+        keyboardDidHideListener.remove();
+      };
+    }, []);
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarStyle: isKeyboardVisible ? { display: "none" } : {},
       }}
     >
       <Tabs.Screen
@@ -33,7 +57,7 @@ export default function TabLayout() {
           title: "Search",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-               name={focused ? "search" : "search-outline"}
+              name={focused ? "search" : "search-outline"}
               color={color}
             />
           ),
