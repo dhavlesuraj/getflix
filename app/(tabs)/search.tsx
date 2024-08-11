@@ -8,36 +8,54 @@ import {
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 
+
+
 const SearchComponent = () => {
+   const movies = [
+     {
+       id: 1,
+       name: "The Shawshank Redemption hhhhhhhhhhhhhh",
+       thumbnail: "https://via.placeholder.com/150x200?text=Shawshank",
+     },
+     {
+       id: 2,
+       name: "The Godfather",
+       thumbnail: "https://via.placeholder.com/150x200?text=Godfather",
+     },
+     {
+       id: 3,
+       name: "The Dark Knight",
+       thumbnail: "https://via.placeholder.com/150x200?text=Dark+Knight",
+     },
+     {
+       id: 4,
+       name: "Pulp Fiction",
+       thumbnail: "https://via.placeholder.com/150x200?text=Pulp+Fiction",
+     },
+     {
+       id: 5,
+       name: "Inception",
+       thumbnail: "https://via.placeholder.com/150x200?text=Inception",
+     },
+   ];
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState<any>([]);
+  const [filteredMovies, setFilteredMovies] = useState<any>(movies);
 
   const colorScheme = useColorScheme(); // Get the current color scheme
 
   const isDarkMode = colorScheme === "dark";
 
-  const movies = [
-    "The Shawshank Redemption",
-    "The Godfather",
-    "The Dark Knight",
-    "Pulp Fiction",
-    "Schindler’s List",
-    "Inception",
-    "Fight Club",
-    "Forrest Gump",
-    "The Matrix",
-    "Goodfellas",
-  ];
-
   const handleSearch = (text: any) => {
     setSearchTerm(text);
     if (text) {
       const filtered = movies.filter((movie) =>
-        movie.toLowerCase().includes(text.toLowerCase())
+        movie.name.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredMovies(filtered);
     } else {
@@ -83,27 +101,29 @@ const SearchComponent = () => {
       </View>
       <FlatList
         data={filteredMovies}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Text
-            style={[
-              styles.searchListItem,
-              isDarkMode && styles.darkSearchListItem,
-            ]}
-          >
-            {item}
-          </Text>
+          <View style={styles.movieItem}>
+            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+            <View style={styles.movieInfo}>
+              <Text
+                style={
+                  (styles.movieName, { color: isDarkMode ? "#fff" : "#000" })
+                }
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {item.name}
+              </Text>
+              <TouchableOpacity style={styles.playButton}>
+                <Icon name="play" size={15} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          </View>
         )}
         ListEmptyComponent={() =>
           searchTerm ? (
-            <Text
-              style={[
-                styles.noResultsText,
-                isDarkMode && styles.darkNoResultsText,
-              ]}
-            >
-              No results found.
-            </Text>
+            <Text style={styles.noResultsText}>No results found.</Text>
           ) : null
         }
       />
@@ -171,6 +191,37 @@ const styles = StyleSheet.create({
   },
   darkNoResultsText: {
     color: "#888", // Dark mode text color
+  },
+  movieItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  thumbnail: {
+    width: 130,
+    height: 100,
+    borderRadius: 5,
+    marginRight: 15,
+  },
+  movieInfo: {
+    flex: 1,
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  movieName: {
+    fontSize: 16,
+    color: "#fff",
+    flexShrink: 1,
+    marginRight: 10,
+  },
+  playButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e50914",
+    borderRadius: 50,
+    width: 40,
+    height: 40,
   },
 });
 
