@@ -7,6 +7,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 
+
 export default function HomeScreen() {
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,9 @@ export default function HomeScreen() {
       throw error;
     }
   };
+
+  
+
   return (
     <>
       <SafeAreaView>
