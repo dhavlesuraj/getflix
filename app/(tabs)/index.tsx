@@ -6,10 +6,11 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
+import {upComingMovieData} from "../apiCall";
 
 
 export default function HomeScreen() {
-  const [movieData, setMovieData] = useState([]);
+  const [upcomingMovieData, setUpcomingMovieData] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
 
@@ -17,8 +18,8 @@ export default function HomeScreen() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchMovieData();
-        setMovieData(data);
+        const data = await upComingMovieData();
+        setUpcomingMovieData(data);
       } catch (err) {
         setError(err);
       } finally {
@@ -29,23 +30,7 @@ export default function HomeScreen() {
     getData();
   }, []);
 
-  // console.log("-----------------");
-  // console.log("data=",movieData);
-
-  const fetchMovieData = async () => {
-    try {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/157336?api_key=3f46ff37c76cce5c6e7e2de6e9e77386"
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-      throw error;
-    }
-  };
-
-  
+  console.log("upcomingMovieData=", upcomingMovieData);
 
   return (
     <>

@@ -22,18 +22,16 @@ const SearchComponent = () => {
   const isDarkMode = colorScheme === "dark";
 
   const handleSearch =async (text: any) => {
-    console.log("text=", text);
+    
     setSearchTerm(text);
     if (text) {
-      //const filtered = movies.filter((movie) => movie.name.toLowerCase().includes(text.toLowerCase()));
       const res = await searchMovieData(text.toLowerCase());
-      
       setFilteredMovies(res.results);
     } else {
       setFilteredMovies([]);
     }
   };
-  console.log("results=", filteredMovies);
+
   const handleMicPress = () => {
     console.log("Mic pressed");
   };

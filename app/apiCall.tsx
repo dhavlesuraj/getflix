@@ -9,7 +9,6 @@ const config={
 
 export const searchMovieData = async (searchData:any) => {
   try {
-    console.log("searchData=", searchData);
     //const userCookies = Cookies.get("authtoken");
     const myHeaders = new Headers();
     if (config.token) {
@@ -23,7 +22,7 @@ export const searchMovieData = async (searchData:any) => {
       redirect: "follow",
     };
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchData}&api_key=3f46ff37c76cce5c6e7e2de6e9e77386`,
+      `${config.baseURL}/search/movie?query=${searchData}&api_key=3f46ff37c76cce5c6e7e2de6e9e77386`,
       requestOptions
     );
     const data = await response.json();
@@ -32,3 +31,106 @@ export const searchMovieData = async (searchData:any) => {
     console.log(error);
   }
 };
+
+export const upComingMovieData = async () => {
+  try {
+    //const userCookies = Cookies.get("authtoken");
+    const myHeaders = new Headers();
+    if (config.token) {
+      myHeaders.append("Your-Dynamic-Cookie", config.token);
+    }
+    myHeaders.append("Authorization", `Bearer ${config.token}`);
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const response = await fetch(
+      `${config.baseURL}/movie/upcoming`,
+      requestOptions
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const popularMovieData = async () => {
+  try {
+    //const userCookies = Cookies.get("authtoken");
+    const myHeaders = new Headers();
+    if (config.token) {
+      myHeaders.append("Your-Dynamic-Cookie", config.token);
+    }
+    myHeaders.append("Authorization", `Bearer ${config.token}`);
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const response = await fetch(
+      `${config.baseURL}/movie/popular`,
+      requestOptions
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const topRatedMovieData = async () => {
+  try {
+    //const userCookies = Cookies.get("authtoken");
+    const myHeaders = new Headers();
+    if (config.token) {
+      myHeaders.append("Your-Dynamic-Cookie", config.token);
+    }
+    myHeaders.append("Authorization", `Bearer ${config.token}`);
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const response = await fetch(
+      `${config.baseURL}/movie/top_rated`,
+      requestOptions
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const nowPlayingMovieData = async () => {
+  try {
+    //const userCookies = Cookies.get("authtoken");
+    const myHeaders = new Headers();
+    if (config.token) {
+      myHeaders.append("Your-Dynamic-Cookie", config.token);
+    }
+    myHeaders.append("Authorization", `Bearer ${config.token}`);
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const response = await fetch(
+      `${config.baseURL}/movie/now_playing`,
+      requestOptions
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
