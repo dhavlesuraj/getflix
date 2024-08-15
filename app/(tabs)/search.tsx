@@ -11,53 +11,22 @@ import {
   Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import { searchMovieData } from "../apiCall";
 
 
 
 const SearchComponent = () => {
-   const movies = [
-     {
-       id: 1,
-       name: "The Shawshank Redemption hhhhhhhhhhhhhh",
-       thumbnail: "https://via.placeholder.com/150x200?text=Shawshank",
-     },
-     {
-       id: 2,
-       name: "The Godfather",
-       thumbnail: "https://via.placeholder.com/150x200?text=Godfather",
-     },
-     {
-       id: 3,
-       name: "The Dark Knight",
-       thumbnail: "https://via.placeholder.com/150x200?text=Dark+Knight",
-     },
-     {
-       id: 4,
-       name: "Pulp Fiction",
-       thumbnail: "https://via.placeholder.com/150x200?text=Pulp+Fiction",
-     },
-     {
-       id: 5,
-       name: "Inception",
-       thumbnail: "https://via.placeholder.com/150x200?text=Inception",
-     },
-   ];
-
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState<any>(movies);
-
+  const [filteredMovies, setFilteredMovies] = useState<any>([]);
   const colorScheme = useColorScheme(); // Get the current color scheme
-
   const isDarkMode = colorScheme === "dark";
 
-  const handleSearch = (text: any) => {
+  const handleSearch =async (text: any) => {
+    
     setSearchTerm(text);
     if (text) {
-      const filtered = movies.filter((movie) =>
-        movie.name.toLowerCase().includes(text.toLowerCase())
-      );
-      setFilteredMovies(filtered);
+      const res = await searchMovieData(text.toLowerCase());
+      setFilteredMovies(res.results);
     } else {
       setFilteredMovies([]);
     }
@@ -104,20 +73,22 @@ const SearchComponent = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.movieItem}>
-            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-            <View style={styles.movieInfo}>
+            <View style={styles.movieThumbnailContainer}>
+              <Image
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+                }}
+                style={styles.thumbnail}
+              />
               <Text
-                style={
-                  (styles.movieName, { color: isDarkMode ? "#fff" : "#000" })
-                }
+                style={[
+                  styles.movieName,
+                ]}
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                {item.name}
+                {item.title}
               </Text>
-              <TouchableOpacity style={styles.playButton}>
-                <Icon name="play" size={15} color="#fff" />
-              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -193,37 +164,28 @@ const styles = StyleSheet.create({
     color: "#888", // Dark mode text color
   },
   movieItem: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 20,
   },
-  thumbnail: {
-    width: 130,
-    height: 100,
-    borderRadius: 5,
-    marginRight: 15,
+  movieThumbnailContainer: {
+    position: "relative",
   },
-  movieInfo: {
-    flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
+  thumbnail: {
+    width: "100%",
+    height: 200,
+    borderRadius: 5,
   },
   movieName: {
-    fontSize: 16,
-    color: "#fff",
-    flexShrink: 1,
-    marginRight: 10,
-  },
-  playButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#e50914",
-    borderRadius: 50,
-    width: 40,
-    height: 40,
+    color:"#fff",
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    fontSize: 18,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    padding: 5,
+    borderRadius: 3,
   },
 });
+
 
 
 

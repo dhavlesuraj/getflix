@@ -6,6 +6,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Keyboard } from "react-native";
 
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
