@@ -6,7 +6,7 @@ export default function download() {
   return (
     <>
       <SafeAreaView>
-        <Text>Download Data</Text>
+        <Text style={{ color: "white" }}>Download Data</Text>
       </SafeAreaView>
     </>
   );

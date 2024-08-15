@@ -51,7 +51,9 @@ export const upComingMovieData = async () => {
       requestOptions
     );
     const data = await response.json();
-    return data;
+   // console.log(data);
+    const status=await response.status;
+    return {success:true,data:data,status:status};
   } catch (error) {
     console.log(error);
   }

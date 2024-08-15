@@ -7,6 +7,12 @@ import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import {upComingMovieData} from "../apiCall";
+import { View, ScrollView } from "react-native";
+import {
+  responsiveHeight
+} from "react-native-responsive-dimensions";
+import HomeBanner from '@/components/HomeBanner';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function HomeScreen() {
@@ -30,18 +36,27 @@ export default function HomeScreen() {
     getData();
   }, []);
 
-  console.log("upcomingMovieData=", upcomingMovieData);
+
 
   return (
-    <>
-      <SafeAreaView>
-        <Text>Hello World</Text>
-      </SafeAreaView>
-    </>
+    <View style={styles.container}>
+      <StatusBar  translucent backgroundColor='transparent'/>
+      <ScrollView style={styles.scrollView}>
+        <HomeBanner/>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container:{
+   backgroundColor:"#000",
+   flex:1,
+  },
+  scrollView:{
+   flex:1,
+  },
+  
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
