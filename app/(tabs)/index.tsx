@@ -1,48 +1,82 @@
-import { Image, StyleSheet, Platform, Text } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect, useState } from 'react';
-import {upComingMovieData} from "../apiCall";
+import { Image, StyleSheet, Platform, Text, Alert } from 'react-native';
 import { View, ScrollView } from "react-native";
-import {
-  responsiveHeight
-} from "react-native-responsive-dimensions";
 import HomeBanner from '@/components/HomeBanner';
 import { StatusBar } from 'expo-status-bar';
+import MovieCards from '@/components/MovieCards';
+import { useEffect, useState } from 'react';
+import { nowPlayingMovieData, popularMovieData, topRatedMovieData } from '../apiCall';
 
 
 export default function HomeScreen() {
-  const [upcomingMovieData, setUpcomingMovieData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+const [nowPlayingData, setNowPlayingData] = useState([]);
+const[popularMovie_Data,setPopularMovie_Data]=useState([]);
+const[topRatedMoviesData,setTopRatedMoviesData]=useState([]);
 
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await upComingMovieData();
-        setUpcomingMovieData(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
+useEffect(() => {
+  const getData = async () => {
+    try {
+      const { data, status }: any = await nowPlayingMovieData();
+      if (status === 200) {
+        setNowPlayingData(data.results);
+      } else {
+        Alert.alert(`Response failed with ${data}`);
       }
-    };
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  getData();
+}, []);
 
-    getData();
-  }, []);
+useEffect(() => {
+  const getData = async () => {
+    try {
+      const { data, status }: any = await popularMovieData();
+      if (status === 200) {
+        setPopularMovie_Data(data.results);
+      } else {
+        Alert.alert(`Response failed with ${data}`);
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  getData();
+}, []);
 
+useEffect(() => {
+  const getData = async () => {
+    try {
+      const { data, status }: any = await topRatedMovieData();
+      if (status === 200) {
+        setTopRatedMoviesData(data.results);
+      } else {
+        Alert.alert(`Response failed with ${data}`);
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  getData();
+}, []);
 
 
   return (
     <View style={styles.container}>
-      <StatusBar  translucent backgroundColor='transparent'/>
+      <StatusBar translucent backgroundColor="transparent" />
       <ScrollView style={styles.scrollView}>
-        <HomeBanner/>
+        <HomeBanner />
+        <View style={styles.subContainer}>
+          <MovieCards title="Now Playing" data={nowPlayingData} />
+          <MovieCards title="Top Rated Movies" data={topRatedMoviesData} />
+          <MovieCards title="Popular Movies" data={popularMovie_Data} />
+        </View>
       </ScrollView>
     </View>
   );
@@ -73,4 +107,18 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
   },
+  subContainer:{
+   paddingHorizontal:15,
+   gap:10,
+   marginTop:20
+  }
 });
+
+function setError(err: unknown) {
+  throw new Error('Function not implemented.');
+}
+
+function setLoading(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+

@@ -1,9 +1,9 @@
-import { Alert, SafeAreaView, StyleSheet, Text, View, FlatList, ImageBackground, Dimensions, TouchableOpacity } from 'react-native'
+import { Alert, StyleSheet, Text, View, FlatList, ImageBackground, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { upComingMovieData } from '@/app/apiCall';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { LinearGradient } from "expo-linear-gradient";
-import { Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get("window");
 const HomeBanner = () => {
@@ -43,15 +43,35 @@ const HomeBanner = () => {
             }}
           >
             <LinearGradient
-              colors={["rgba(0,0,0,0.1)", "rgba(0, 0, 0, 0.7)"]}
+              colors={["rgba(0,0,0,0.05)", "rgba(0, 0, 0, 0.7)"]}
               style={styles.linearGradient}
             >
-              <Text style={styles.title}>My List</Text>
-              <TouchableOpacity style={styles.playButton} onPress={handlePressPlayButton}>
-                <Entypo name="controller-play" size={32} color={"black"} />
-                <Text style={[styles.title,{fontSize:responsiveFontSize(2.5),color:"black",fontWeight:'700'}]}>Play</Text>
+              <TouchableOpacity style={styles.myListIcon}>
+                <AntDesign name="plus" size={20} color={"white"} />
+                <Text style={styles.title}>My List</Text>
               </TouchableOpacity>
-              <Text style={styles.title}>My List</Text>
+              <TouchableOpacity
+                style={styles.playButton}
+                onPress={handlePressPlayButton}
+              >
+                <Entypo name="controller-play" size={30} color={"black"} />
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      fontSize: responsiveFontSize(2.5),
+                      color: "black",
+                      fontWeight: "700",
+                    },
+                  ]}
+                >
+                  Play
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.myListIcon}>
+                <AntDesign name="infocirlceo" size={20} color={"white"} />
+                <Text style={styles.title}>Info</Text>
+              </TouchableOpacity>
             </LinearGradient>
           </ImageBackground>
         );
@@ -91,7 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     opacity: 0.9,
   },
-  linearGradient: {
+    linearGradient: {
     flex: 0.2,
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -116,6 +136,9 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"center",
-    gap:5
+    gap:3
+  },
+  myListIcon:{
+   alignItems:"center"
   }
 });
