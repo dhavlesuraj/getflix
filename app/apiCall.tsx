@@ -78,7 +78,9 @@ export const popularMovieData = async () => {
       requestOptions
     );
     const data = await response.json();
-    return data;
+    // console.log(data);
+    const status = await response.status;
+    return { success: true, data: data, status: status };
   } catch (error) {
     console.log(error);
   }
@@ -103,7 +105,9 @@ export const topRatedMovieData = async () => {
       requestOptions
     );
     const data = await response.json();
-    return data;
+    // console.log(data);
+    const status = await response.status;
+    return { success: true, data: data, status: status };
   } catch (error) {
     console.log(error);
   }
@@ -129,7 +133,9 @@ export const nowPlayingMovieData = async () => {
       requestOptions
     );
     const data = await response.json();
-    return data;
+    // console.log(data);
+    const status = await response.status;
+    return { success: true, data: data, status: status };
   } catch (error) {
     console.log(error);
   }
